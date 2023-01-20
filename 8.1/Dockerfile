@@ -11,6 +11,9 @@ WORKDIR /var/www/html
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_NO_INTERACTION 1
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
@@ -48,12 +51,12 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.1
 RUN groupadd --force -g $(id -g) sail
 RUN useradd -ms /bin/bash --no-user-group -g $(id -g) -u 1337 sail
 
-COPY ../ /var/www/html/
+COPY . /var/www/html/
 RUN composer install
 
-COPY start-container /usr/local/bin/start-container
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY php.ini /etc/php/8.1/cli/conf.d/99-sail.ini
+COPY 8.1/start-container /usr/local/bin/start-container
+COPY 8.1/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY 8.1/php.ini /etc/php/8.1/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
