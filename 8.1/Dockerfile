@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 LABEL maintainer="Taylor Otwell"
 
-ARG WWWGROUP="sail"
+ARG WWWGROUP=1337
 ARG NODE_VERSION=18
 ARG POSTGRES_VERSION=14
 
@@ -59,9 +59,9 @@ RUN composer install
 
 RUN chown -R sail:sail /var/www/html/vendor
 
-COPY 8.1/start-container /usr/local/bin/start-container
-COPY 8.1/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY 8.1/php.ini /etc/php/8.1/cli/conf.d/99-sail.ini
+COPY ./8.1/start-container /usr/local/bin/start-container
+COPY ./8.1/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./8.1/php.ini /etc/php/8.1/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
