@@ -14,6 +14,9 @@ ENV TZ=UTC
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_NO_INTERACTION 1
 
+ENV APP_ENV production
+ENV APP_DEBUG false
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN apt-get update \
